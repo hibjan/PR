@@ -1,0 +1,61 @@
+%datafile - Caso 1 (ext): Restrictivo + mínimo de aceites por mes
+VALOR = 200;
+dureza = [8.8, 6.1, 2.0, 4.2, 5.0];
+precios = [| 110, 120, 130, 110, 115
+           | 130, 130, 110,  90, 115
+           | 110, 140, 130, 100,  95
+           | 120, 110, 120, 120, 125
+           | 100, 120, 150, 110, 105
+           |  90, 100, 140,  80, 135 |];
+
+MAXV = 150;
+MAXN = 200;
+
+PV = 5;
+
+MCAP = 500;
+
+CA = 8;
+
+MinD = 3.5;
+MaxD = 5.5;
+MinB = 80000;
+
+inicial = [200, 200, 200, 200, 200];
+
+%Nuevos
+
+% Como mínimo 2 aceites distintos cada mes
+K = [2, 2, 2, 2, 2, 2];
+
+% Sin tonelaje mínimo por aceite
+T = [| 0, 0, 0, 0, 0
+     | 0, 0, 0, 0, 0
+     | 0, 0, 0, 0, 0
+     | 0, 0, 0, 0, 0
+     | 0, 0, 0, 0, 0
+     | 0, 0, 0, 0, 0 |];
+
+% ANV1 y ANV2 requieren VEG1 (caso del enunciado)
+% VEG1 -> ...., ----, ----, ----, ----
+% VEG2 -> ----, ...., ----, ----, ----
+% ANV1 -> VEG1, ----, ...., ----, ----
+% ANV2 -> VEG1, ----, ----, ...., ----
+% ANV3 -> ----, ----, ----, ----, ....
+requiere = [| false, false, false, false, false
+            | false, false, false, false, false
+            | true,  false, false, false, false
+            | true,  false, false, false, false
+            | false, false, false, false, false |];
+
+% Si no se usa ANV3, debe usarse VEG1 ese mes (caso del enunciado)
+% VEG1 -> ...., ----, ----, ----, ----
+% VEG2 -> ----, ...., ----, ----, ----
+% ANV1 -> ----, ----, ...., ----, ----
+% ANV2 -> ----, ----, ----, ...., ----
+% ANV3 -> VEG1, ----, ----, ----, ....
+reemplazo = [| false, false, false, false, false
+             | false, false, false, false, false
+             | false, false, false, false, false
+             | false, false, false, false, false
+             | true,  false, false, false, false |];

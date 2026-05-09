@@ -1,0 +1,29 @@
+%datafile - Caso 2: Stocks iniciales asimétricos y precios estacionales
+% Stocks iniciales muy desequilibrados (ANV1 lleno, ANV2 casi vacío) y
+% precios marcadamente estacionales (caros marzo-abril, baratos enero-febrero
+% y mayo-junio). Esto incentiva comprar por adelantado en meses baratos.
+% PV = 20 deja margen amplio entre vegetales y no vegetales.
+
+VALOR = 160;
+dureza = [8.8, 6.1, 2.0, 4.2, 5.0];
+precios = [| 100, 110, 120, 100, 105
+           | 120, 120, 100,  80, 105
+           | 140, 150, 140, 110, 105
+           | 150, 140, 150, 130, 135
+           | 110, 130, 140, 100,  95
+           |  90,  90, 130,  70, 125 |];
+
+MAXV = 250;
+MAXN = 300;
+
+PV = 20;
+
+MCAP = 800;
+
+CA = 4;
+
+MinD = 3.0;
+MaxD = 6.0;
+MinB = 120000;
+
+inicial = [600, 100, 800, 50, 400];

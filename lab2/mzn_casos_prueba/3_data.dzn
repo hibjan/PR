@@ -1,0 +1,28 @@
+%datafile - Caso 3: Variación PV negativa (favorece no vegetales)
+% Con PV = -25, las toneladas de aceite vegetal no pueden superar el 75% de
+% las no vegetales. Esto obliga a usar siempre algo de no vegetal y limita
+% el uso del VEG1 (dureza 8.8) por la cota de dureza superior.
+
+VALOR = 150;
+dureza = [8.8, 6.1, 2.0, 4.2, 5.0];
+precios = [| 110, 120, 130, 110, 115
+           | 130, 130, 110,  90, 115
+           | 110, 140, 130, 100,  95
+           | 120, 110, 120, 120, 125
+           | 100, 120, 150, 110, 105
+           |  90, 100, 140,  80, 135 |];
+
+MAXV = 200;
+MAXN = 250;
+
+PV = -25;
+
+MCAP = 1000;
+
+CA = 5;
+
+MinD = 3.0;
+MaxD = 6.0;
+MinB = 90000;
+
+inicial = [500, 500, 500, 500, 500];

@@ -1,0 +1,34 @@
+150
+[8.8, 6.1, 2.0, 4.2, 5.0]
+[ [110, 120, 130, 110, 115],
+  [130, 130, 110,  90, 115],
+  [110, 140, 130, 100,  95],
+  [120, 110, 120, 120, 125],
+  [100, 120, 150, 110, 105],
+  [ 90, 100, 140,  80, 135]]
+200
+250
+-25
+1000
+5
+3.0
+6.0
+90000
+[500, 500, 500, 500, 500]
+[0, 0, 0, 0, 0, 0]
+[ [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0]]
+[ [False, False, False, False, False],
+  [False, False, False, False, False],
+  [False, False, False, False, False],
+  [False, False, False, False, False],
+  [False, False, False, True,  False]]
+[ [False, False, False, False, False],
+  [True,  False, False, False, False],
+  [False, False, False, False, False],
+  [False, False, False, False, False],
+  [False, False, False, False, False]]

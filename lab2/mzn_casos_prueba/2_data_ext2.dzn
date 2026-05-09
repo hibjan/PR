@@ -1,0 +1,50 @@
+%datafile - Caso 2 (ext2): Asimétrico + dos productos diferenciados
+% P1: estándar (precio 160, dureza [3.0, 6.0])
+% P2: premium con dureza alta (precio 180, dureza [4.5, 5.5])
+VALOR_p = [160, 180];
+MinD_p  = [3.0, 4.5];
+MaxD_p  = [6.0, 5.5];
+
+dureza = [8.8, 6.1, 2.0, 4.2, 5.0];
+precios = [| 100, 110, 120, 100, 105
+           | 120, 120, 100,  80, 105
+           | 140, 150, 140, 110, 105
+           | 150, 140, 150, 130, 135
+           | 110, 130, 140, 100,  95
+           |  90,  90, 130,  70, 125 |];
+
+MAXV = 250;
+MAXN = 300;
+
+PV = 20;
+
+MCAP = 800;
+
+CA = 4;
+
+MinB = 120000;
+
+inicial = [600, 100, 800, 50, 400];
+
+%Nuevos
+
+K = [3, 3, 3, 3, 3, 3];
+
+T = [| 30, 30, 30, 30, 30
+     | 30, 30, 30, 30, 30
+     | 30, 30, 30, 30, 30
+     | 30, 30, 30, 30, 30
+     | 30, 30, 30, 30, 30
+     | 30, 30, 30, 30, 30 |];
+
+requiere = [| false, false, false, false, false
+            | false, false, false, false, true
+            | false, true,  false, false, false
+            | false, false, false, false, false
+            | false, false, false, false, false |];
+
+reemplazo = [| false, false, false, false, false
+             | false, false, false, false, false
+             | false, false, false, false, false
+             | false, false, false, false, false
+             | false, false, false, false, false |];
