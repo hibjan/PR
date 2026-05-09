@@ -5,11 +5,11 @@ import sys, io, ast
 try:
     filenameIn = sys.argv[1]
 except IndexError:
-    filenameIn = "data_ext.txt"
+    filenameIn = "./z3_casos_prueba/0_data_ext.txt"
 myinput = "".join(open(filenameIn, "r").readlines())
 sys.stdin = io.StringIO(myinput)
 
-LEXICOGRAPHIC = False   # Optimización lexicográfica: 1º max beneficio, 2º min aceites
+LEXICOGRAPHIC = True   # Optimización lexicográfica: 1º max beneficio, 2º min aceites
 #SOLO APLICAN SI LEXICOGRAPHIC = False
 OPTIMIZE = True # Problema de optimización ?
 SEARCH = True # Problema de optimización con búsqueda (en vez de pesos) ?

@@ -6,7 +6,7 @@ import time
 try:
     filenameIn = sys.argv[1]
 except IndexError:
-    filenameIn = "data.txt"
+    filenameIn = "./z3_casos_prueba/0_data.txt"
 myinput = "".join(open(filenameIn, "r").readlines())
 sys.stdin = io.StringIO(myinput)
 
@@ -171,7 +171,6 @@ def busq_lin(s):
     mejor_modelo = None
 
     while cota >= 0:
-        s.push()
         s.add(contar_aceites() <= cota)
         res = s.check()
         if res == sat:
@@ -183,8 +182,6 @@ def busq_lin(s):
         else:
             print("Error: resultado inesperado.")
             break
-    
-        s.pop()
 
     return (mejor_modelo, cota + 1)
 
