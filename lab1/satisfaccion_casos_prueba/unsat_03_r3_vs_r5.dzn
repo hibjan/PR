@@ -1,0 +1,36 @@
+% ============================================================
+% INSAT-03 — Insatisfacible por propagación: R3 vs R5
+% ============================================================
+% Objetivo: verificar que el solver devuelve UNSAT (no un assert)
+% cuando R3 y R5 son matemáticamente contradictorios.
+%
+% Diseño:
+%   - D=7, MaxDT=2: en cualquier ventana de 3 días consecutivos,
+%     como mucho se trabajan 2. El máximo de días trabajables en
+%     7 días con MaxDT=2 es: trabajar en días {1,2,4,5,7} = 5 días.
+%   - MinDT=6: se exigen 6 días trabajados en 7.
+%   - Con MaxDT=2 es imposible trabajar 6 días en 7:
+%       Se necesitaría al menos una ventana de 3 días trabajando 3,
+%       pero MaxDT=2 lo prohíbe. El máximo alcanzable es 5.
+%   - El assert no lo detecta (5 < 7 = D), la propagación sí.
+
+D = 7;
+T = 8;
+N1 = 2;
+N2 = 2;
+N3 = 2;
+MaxDT = 2;
+MaxDL = 5;
+MinDT = 6;
+A = 0;
+
+afines = [|false, true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  false|];
+
+R = {1, 4, 7};

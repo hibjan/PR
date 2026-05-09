@@ -1,0 +1,59 @@
+% ============================================================
+% OPT-01 — Caso base sin preferencias ni funcionalidades extras
+% ============================================================
+% Objetivo: verificar que la parte de optimización funciona en
+% un escenario neutro: sin días no deseados ni turnos no deseados,
+% sin trabajadores antiestrés ni que doblen.
+%
+% Restricciones activas:
+%   R1-R9 estándar
+%   antiestres = {} => ningún trabajador con turno rotatorio
+%   doblar     = {} => nadie dobla
+%   diaND      = todo false => nadie pide librar
+%   turnoND    = todo 0    => nadie pide evitar un turno
+%
+% Ejecutar con "solve satisfy"
+
+D = 7;
+T = 8;
+N1 = 2;
+N2 = 2;
+N3 = 2;
+MaxDT = 4;
+MaxDL = 2;
+MinDT = 4;
+A = 1;
+
+afines = [|false, true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  false|];
+
+R = {1, 2, 4, 5, 7, 8};
+
+antiestres = {};
+doblar     = {};
+
+% Nadie pide día libre
+diaND = [|false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false|];
+
+% Nadie pide evitar un turno concreto
+turnoND = [|0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0|];

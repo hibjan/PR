@@ -1,0 +1,62 @@
+% ============================================================
+% OPT-04 — Caso combinado: diaND + turnoND + doblar + antiestres
+% ============================================================
+% Objetivo: ejercitar todas las funcionalidades de optimización
+% simultáneamente. Hay trabajadores antiestrés, trabajadores que
+% doblan, peticiones de días libres y peticiones de turno evitado.
+%
+% Cambios respecto a la versión anterior:
+%   MaxDL=3 (antes 2): el día libre por doblar no bloquee MaxDL
+%   R = {1,2,5,6,9,10}: 2 encargados por turno para dar margen
+%   doblar = {3,4}: igual, pero con MaxDL más holgado ya funciona
+%
+% Ejecutar con "solve minimize" del apartado 3 o 4
+
+D = 10;
+T = 10;
+N1 = 3;
+N2 = 3;
+N3 = 2;
+MaxDT = 5;
+MaxDL = 3;
+MinDT = 4;
+A = 1;
+
+afines = [|false, true,  true,  true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  true,  true,  false|];
+
+% 2 encargados por turno: {1,2} T1, {5,6} T2, {9,10} T3
+R = {1, 2, 5, 6, 9, 10};
+
+antiestres = {1, 2};
+doblar = {3, 4};
+
+diaND = [|false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false
+         |true,  false, true,  false, true,  false, false, false, false, false
+         |false, true,  false, true,  false, true,  false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false|];
+
+turnoND = [|0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+           |1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0|];

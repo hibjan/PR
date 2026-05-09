@@ -1,0 +1,46 @@
+% ============================================================
+% SAT-05 — Caso límite: todas las restricciones apretadas
+% ============================================================
+% Objetivo: verificar que el solver encuentra solución cuando
+% todas las restricciones están activas simultáneamente y con
+% poco margen. Útil para medir el tiempo hasta primera solución.
+%
+% Restricciones activas:
+%   R1: N1=N2=N3=3 => 9 puestos/día, 3 libran
+%   R3: MaxDT=3 => patrón máximo W W W L ... => 8 días trabajados en D=10
+%   R4: MaxDL=2 => nadie libra 3 días seguidos
+%   R5: MinDT=6 => todos trabajan al menos 6 de 10 días
+%   R6, R7: activas por presencia de turno 3
+%   R8: A=1, afinidades en cadena circular (2 afines/trabajador)
+%   R9: 2 encargados por turno => cobertura garantizada
+
+
+D = 10;
+T = 12;
+N1 = 3;
+N2 = 3;
+N3 = 3;
+MaxDT = 3;
+MaxDL = 2;
+MinDT = 6;
+A = 1;
+
+% Afinidades en cadena circular: t afín a t-1 y t+1 (mod 12)
+% Los pares {1,2},{3,4},...,{11,12} son vecinos en la cadena,
+% por lo que dos vecinos en el mismo turno siempre se satisfacen.
+afines = [|false, true,  false, false, false, false, false, false, false, false, false, true
+          |true,  false, true,  false, false, false, false, false, false, false, false, false
+          |false, true,  false, true,  false, false, false, false, false, false, false, false
+          |false, false, true,  false, true,  false, false, false, false, false, false, false
+          |false, false, false, true,  false, true,  false, false, false, false, false, false
+          |false, false, false, false, true,  false, true,  false, false, false, false, false
+          |false, false, false, false, false, true,  false, true,  false, false, false, false
+          |false, false, false, false, false, false, true,  false, true,  false, false, false
+          |false, false, false, false, false, false, false, true,  false, true,  false, false
+          |false, false, false, false, false, false, false, false, true,  false, true,  false
+          |false, false, false, false, false, false, false, false, false, true,  false, true
+          |true,  false, false, false, false, false, false, false, false, false, true,  false|];
+
+% 2 encargados por turno: {1,2} para T1, {5,6} para T2, {9,10} para T3
+% Además son vecinos en la cadena de afinidades => R8 garantizada entre ellos
+R = {1, 2, 5, 6, 9, 10};

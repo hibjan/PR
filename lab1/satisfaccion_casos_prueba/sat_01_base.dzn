@@ -1,0 +1,41 @@
+% ============================================================
+% SAT-01 — Caso base satisfacible
+% ============================================================
+% Objetivo: verificar que el modelo encuentra solución en un
+% escenario normal donde todas las restricciones R1-R9 son
+% activas pero no excesivamente ajustadas.
+%
+% Restricciones activas:
+%   R1: N1=2, N2=2, N3=2  => 6 trabajadores por día, 2 libran
+%   R2: implícita en la variable
+%   R3: MaxDT=3 => nadie trabaja 4 días seguidos
+%   R4: MaxDL=2 => nadie libra 3 días seguidos
+%   R5: MinDT=3 => todos trabajan al menos 3 de 7 días
+%   R6: turno 3 el día d => no turno 1 el día d+1
+%   R7: turno 3 dos días seguidos => libra el tercero
+%   R8: A=1 => cada trabajador tiene al menos 1 afín en su turno
+%   R9: 2 encargados por turno => si uno libra, el otro cubre
+%
+
+D = 7;
+T = 8;
+N1 = 2;
+N2 = 2;
+N3 = 2;
+MaxDT = 3;
+MaxDL = 2;
+MinDT = 3;
+A = 1;
+
+% Todos afines entre sí: R8 con A=1 no bloquea ninguna asignación
+afines = [|false, true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  false|];
+
+% 2 encargados por turno: {1,2} para T1, {4,5} para T2, {7,8} para T3
+R = {1, 2, 4, 5, 7, 8};

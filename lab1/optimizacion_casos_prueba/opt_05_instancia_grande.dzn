@@ -1,0 +1,70 @@
+% ============================================================
+% OPT-05 — Instancia grande con restricciones ajustadas
+% ============================================================
+% Objetivo: evaluar el rendimiento del solver con una instancia
+% de mayor tamaño con peticiones de días y turnos no deseados.
+%
+% Cambios respecto a la versión anterior:
+%   MinDT=6 (antes 7): compatible con MaxDT=5 y MaxDL=2 en D=14
+%   Matriz de afines totalmente conectada: elimina UNSAT por R8
+%   R con 6 encargados: 2 por turno, da margen suficiente
+%
+% Ejecutar con "solve minimize" del apartado 3 o 4
+
+D = 14;
+T = 12;
+N1 = 3;
+N2 = 3;
+N3 = 3;
+MaxDT = 5;
+MaxDL = 2;
+MinDT = 6;
+A = 1;
+
+% Todos afines entre sí para no bloquear asignaciones por R8
+afines = [|false, true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true,  true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true,  true,  true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  true,  true,  true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  true,  true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  false|];
+
+% 2 encargados por turno
+R = {1, 2, 5, 6, 9, 10};
+
+antiestres = {11, 12};
+doblar = {3, 6};
+
+% T1-T4 piden librar días impares; T5-T8 piden librar días pares
+diaND = [|true,  false, true,  false, true,  false, true,  false, true,  false, true,  false, true,  false
+         |true,  false, true,  false, true,  false, true,  false, true,  false, true,  false, true,  false
+         |true,  false, true,  false, true,  false, true,  false, true,  false, true,  false, true,  false
+         |true,  false, true,  false, true,  false, true,  false, true,  false, true,  false, true,  false
+         |false, true,  false, true,  false, true,  false, true,  false, true,  false, true,  false, true
+         |false, true,  false, true,  false, true,  false, true,  false, true,  false, true,  false, true
+         |false, true,  false, true,  false, true,  false, true,  false, true,  false, true,  false, true
+         |false, true,  false, true,  false, true,  false, true,  false, true,  false, true,  false, true
+         |false, false, false, false, false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false, false, false, false, false, false, false, false|];
+
+% T1-T4 evitan turno 2 días impares; T5-T8 evitan turno 1 días pares
+turnoND = [|2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0
+           |2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0
+           |2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0
+           |2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0
+           |0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+           |0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+           |0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+           |0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0|];

@@ -1,0 +1,44 @@
+% ============================================================
+% SAT-03 — Forzar R4 (MaxDL) y R6 (turno 3 => no turno 1 día sig.)
+% ============================================================
+% Objetivo: verificar que el modelo no permite librar más de
+% MaxDL días consecutivos, y que después de turno 3 no asigna
+% turno 1 al día siguiente.
+%
+% Diseño:
+%   - D=7, T=9, N1=N2=2, N3=1 => 5 puestos/día, 4 libran.
+%   - MaxDL=1: los 4 libres diarios nunca pueden ser consecutivos
+%     para el mismo trabajador.
+%   - MaxDT=7 (= D): holgado, R3 no interfiere. Los encargados
+%     pueden trabajar todos los días sin violar MaxDT.
+%   - MinDT=3: cada trabajador trabaja al menos 3 de 7 días,
+%     pudiendo librar hasta 4. Con MaxDL=1 y D=7, el patrón
+%     L W L W L W L permite 4 libres no consecutivos: compatible.
+%   - R6 presionada: con N3=1 hay 1 puesto de noche por día,
+%     quien la haga no puede tener turno 1 al día siguiente.
+%   - R9: 2 encargados por turno. Con MaxDT=7, pueden trabajar
+%     los 7 días sin problema si es necesario.
+
+D = 7;
+T = 9;
+N1 = 2;
+N2 = 2;
+N3 = 1;
+MaxDT = 7;
+MaxDL = 1;
+MinDT = 3;
+A = 0;
+
+afines = [|false, true,  true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  true,  false|];
+
+% 2 encargados por turno: {1,2} para T1, {4,5} para T2, {7,8} para T3
+% Trabajador 3, 6, 9 son no-encargados
+R = {1, 2, 4, 5, 7, 8};

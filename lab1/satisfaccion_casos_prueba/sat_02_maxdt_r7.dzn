@@ -1,0 +1,37 @@
+% ============================================================
+% SAT-02 — Forzar R3 (MaxDT) y R7 (turno 3 consecutivo)
+% ============================================================
+% Objetivo: verificar que R3 y R7 se aplican correctamente.
+%
+% Diseño:
+%   - D=6, MaxDT=2: nadie puede trabajar más de 2 días seguidos.
+%     Patrón máximo en 6 días: W W L W W L => 4 días trabajados.
+%   - MaxDL=3: holgado, no interfiere con R3.
+%   - MinDT=2: mínimo bajo, compatible con MaxDT=2.
+%   - N1=N2=N3=2 y T=10: 6 puestos/día, 4 libran por día.
+%   - R7 activa: con D=6 y turno 3, hay oportunidad de que alguien
+%     trabaje turno 3 dos días seguidos y luego libre el tercero.
+
+D = 6;
+T = 10;
+N1 = 2;
+N2 = 2;
+N3 = 2;
+MaxDT = 2;
+MaxDL = 3;
+MinDT = 2;
+A = 0;
+
+afines = [|false, true,  true,  true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  true,  true,  false|];
+
+% 2 encargados por turno: {1,2} para T1, {5,6} para T2, {9,10} para T3
+R = {1, 2, 5, 6, 9, 10};

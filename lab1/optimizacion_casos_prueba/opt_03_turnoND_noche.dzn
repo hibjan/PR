@@ -1,0 +1,74 @@
+% ============================================================
+% OPT-03 — Turnos no deseados con conflicto parcial
+% ============================================================
+% Objetivo: comprobar que el optimizador minimiza los
+% incumplimientos de turno (turnoND). Varios trabajadores piden
+% evitar el turno 3 (noche), pero como N3=2 algunos tendrán que
+% ser asignados a ese turno inevitablemente.
+%
+% Trabajadores 1-6 piden no hacer nunca el turno 3.
+% El planificador necesita 2 trabajadores en turno 3 cada día,
+% así que en los 7 días habrá al menos 14 incumplimientos totales.
+% El óptimo distribuye esos incumplimientos entre los seis.
+%
+% Restricciones activas:
+%   R1-R9 estándar
+%   turnoND activo con preferencia de evitar turno 3
+%   diaND = todo false (nadie pide día libre)
+%   antiestres = {}, doblar = {}
+%
+% Cambios respecto a la versión anterior:
+%   T=10: más margen para cubrir turnos y respetar MaxDL
+%   N1=2, N2=2, N3=2: menos presión diaria (6 trabajando, 4 libran)
+%   MinDT=3: más holgura en mínimos
+%   R ampliado para cubrir los 3 turnos con margen
+%
+% Ejecutar con "solve minimize" del apartado 4
+
+D = 7;
+T = 10;
+N1 = 2;
+N2 = 2;
+N3 = 2;
+MaxDT = 5;
+MaxDL = 2;
+MinDT = 3;
+A = 1;
+
+afines = [|false, true,  true,  true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  true,  true,  false|];
+
+R = {1, 2, 7, 8, 9, 10};
+
+antiestres = {};
+doblar     = {};
+
+diaND = [|false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false
+         |false, false, false, false, false, false, false|];
+
+turnoND = [|3, 3, 3, 3, 3, 3, 3
+           |3, 3, 3, 3, 3, 3, 3
+           |3, 3, 3, 3, 3, 3, 3
+           |3, 3, 3, 3, 3, 3, 3
+           |3, 3, 3, 3, 3, 3, 3
+           |3, 3, 3, 3, 3, 3, 3
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0
+           |0, 0, 0, 0, 0, 0, 0|];

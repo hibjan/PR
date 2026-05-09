@@ -1,0 +1,29 @@
+% ============================================================
+% INSAT-02 — Insatisfacible: MinDT > D (assert)
+% ============================================================
+% Objetivo: verificar que el assert de MinDT <= D se dispara
+% antes de iniciar la búsqueda.
+%
+% Diseño:
+%   - D=3 días, MinDT=5: se pide trabajar 5 días en solo 3.
+%   - El assert debe dispararse inmediatamente con:
+%     "Se está exigiendo trabajar más días de los que hay..."
+
+D = 3;
+T = 6;
+N1 = 2;
+N2 = 2;
+N3 = 2;
+MaxDT = 3;
+MaxDL = 2;
+MinDT = 5;
+A = 0;
+
+afines = [|false, true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true
+          |true,  true,  false, true,  true,  true
+          |true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  false|];
+
+R = {1, 3, 5};

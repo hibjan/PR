@@ -1,0 +1,51 @@
+% ============================================================
+% SAT-04 — Forzar R8 (afinidades con A=2)
+% ============================================================
+% Objetivo: verificar que R8 se satisface cuando A es alto y
+% la estructura de afinidades restringe qué trabajadores pueden
+% coincidir en el mismo turno.
+%
+% Diseño:
+%   - T=9, turnos de 3 trabajadores cada uno (N1=N2=N3=3).
+%   - A=2: cada trabajador debe tener al menos 2 afines en su turno.
+%     Como cada turno tiene exactamente 3 personas, el trabajador
+%     más sus 2 compañeros de turno tienen que ser todos afines
+%     entre sí => los grupos de turno están prácticamente fijados
+%     por las afinidades.
+%   - Afinidades diseñadas en 3 cliques de 3:
+%       Grupo A: {1,2,3} todos afines entre sí
+%       Grupo B: {4,5,6} todos afines entre sí
+%       Grupo C: {7,8,9} todos afines entre sí
+%     Solo pueden coexistir en un turno miembros del mismo grupo.
+%   - Encargados: al menos 1 por grupo para poder cubrir R9.
+%   - MaxDT y MaxDL holgados para no interferir.
+%
+% Restricciones principales bajo prueba: R8
+% Restricciones también activas: R1, R9
+% Restricciones sin presión: R3, R4, R5, R6, R7
+%
+% (Los grupos A, B, C rotarán entre turnos cada día)
+
+D = 4;
+T = 9;
+N1 = 3;
+N2 = 3;
+N3 = 3;
+MaxDT = 4;
+MaxDL = 4;
+MinDT = 1;
+A = 2;
+
+% Afinidades: 3 cliques disjuntos {1,2,3}, {4,5,6}, {7,8,9}
+afines = [|false, true,  true,  false, false, false, false, false, false
+          |true,  false, true,  false, false, false, false, false, false
+          |true,  true,  false, false, false, false, false, false, false
+          |false, false, false, false, true,  true,  false, false, false
+          |false, false, false, true,  false, true,  false, false, false
+          |false, false, false, true,  true,  false, false, false, false
+          |false, false, false, false, false, false, false, true,  true
+          |false, false, false, false, false, false, true,  false, true
+          |false, false, false, false, false, false, true,  true,  false|];
+
+% Un encargado por grupo => pueden cubrir los 3 turnos
+R = {1, 4, 7};

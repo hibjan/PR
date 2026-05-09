@@ -1,0 +1,33 @@
+% ============================================================
+% INSAT-05 — Insatisfacible por R8: afinidades imposibles
+% ============================================================
+% Objetivo: verificar que R8 hace el problema insatisfacible
+% cuando la estructura de afinidades no permite satisfacer A=2.
+%
+% Diseño:
+%   - T=6, N1=N2=N3=2 (turnos de 2 personas), A=2.
+%   - A=2 con turno de 2 personas significa que cada trabajador
+%     necesita 2 afines en su turno, pero solo hay 1 compañero
+%     posible → IMPOSIBLE sin importar la asignación.
+%   - El assert solo comprueba A < max(N1,N2,N3) = 2, es decir
+%     A < 2, pero aquí A=2, por lo que el assert lo detectaría.
+%   - Sirve para verificar que el assert de A funciona.
+
+D = 4;
+T = 6;
+N1 = 2;
+N2 = 2;
+N3 = 2;
+MaxDT = 4;
+MaxDL = 4;
+MinDT = 1;
+A = 2;
+
+afines = [|false, true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true
+          |true,  true,  false, true,  true,  true
+          |true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  false|];
+
+R = {1, 3, 5};

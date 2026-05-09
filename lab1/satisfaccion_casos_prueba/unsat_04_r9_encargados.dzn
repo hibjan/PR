@@ -1,0 +1,36 @@
+% ============================================================
+% INSAT-04 — Insatisfacible por R9: encargados insuficientes
+% ============================================================
+% Objetivo: verificar que R9 hace el problema insatisfacible
+% cuando no hay suficientes encargados para cubrir los 3 turnos
+% todos los días.
+%
+% Diseño:
+%   - Solo 2 encargados (R = {1, 2}) pero se necesita al menos
+%     1 en cada uno de los 3 turnos cada día.
+%   - Un encargado solo puede estar en 1 turno por día (R2),
+%     así que con 2 encargados solo se pueden cubrir 2 turnos.
+%   - El tercer turno queda sin encargado → UNSAT.
+%   - MinDT y MaxDT holgados para que R3/R5 no interfieran.
+
+D = 4;
+T = 8;
+N1 = 2;
+N2 = 2;
+N3 = 2;
+MaxDT = 4;
+MaxDL = 4;
+MinDT = 1;
+A = 0;
+
+afines = [|false, true,  true,  true,  true,  true,  true,  true
+          |true,  false, true,  true,  true,  true,  true,  true
+          |true,  true,  false, true,  true,  true,  true,  true
+          |true,  true,  true,  false, true,  true,  true,  true
+          |true,  true,  true,  true,  false, true,  true,  true
+          |true,  true,  true,  true,  true,  false, true,  true
+          |true,  true,  true,  true,  true,  true,  false, true
+          |true,  true,  true,  true,  true,  true,  true,  false|];
+
+% Solo 2 encargados: imposible cubrir los 3 turnos cada día
+R = {1, 2};
